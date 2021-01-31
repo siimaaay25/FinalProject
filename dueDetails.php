@@ -96,7 +96,7 @@ echo $months;
             
                   <th>Resident Name</th>
               
-              <th>Contact Number</th>
+              <th>Due</th>
              
                    <th>Action</th>
                 </tr>
@@ -129,6 +129,14 @@ $sql="select 500-SUM(amount) as sum,username from payment where date(payingTime)
 else if($months<7){
 	$totaldue=600;
 $sql="select 600-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
+}
+	else if($months<8){
+	$totaldue=700;
+$sql="select 700-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
+}
+else if($months<9){
+	$totaldue=800;
+$sql="select 800-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
 }
 else{
 	$sql="select 700-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
