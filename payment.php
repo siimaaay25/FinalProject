@@ -11,13 +11,13 @@ $dues=$_POST['dues'];
 
 $Username=$_POST['username'];
 
-$ikametNo=$_POST['ikametNo'];
-
-     $query=mysqli_query($con,"update payment set amount=amount+'$dues' where ikametNo='$ikametNo' AND Username='$Username' ");
-
-           if ($query) {
+$dn=date('F', strtotime('select payDate from dues ')) ;
+     //$query=mysqli_query($con,"INSERT INTO payment set amount=amount' where ikametNo='$ikametNo' AND Username='$Username' ");
+ $query=mysqli_query($con,"INSERT INTO payment(username,amount) Values('$Username','$dues')");
+ $query2=mysqli_query($con,"UPDATE dues set due=due-'$dues' where username='$Username'");
+           if ($query and $query2) {
 			   
- 
+  
              $msg="Your $dues TL payment has been added";
            }
            else
@@ -112,15 +112,6 @@ $ikametNo=$_POST['ikametNo'];
                                             </div>
                                           
                                             
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="password-input" class=" form-control-label">ikametNo</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="ikametNo" name="ikametNo" placeholder="ikametNo" class="form-control" required="true">
-                                                    
-                                                </div>
-                                            </div>
                                            
                                           
                                           <div class="card-footer">
