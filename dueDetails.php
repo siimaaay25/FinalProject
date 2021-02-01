@@ -70,20 +70,19 @@ include('dbconnection.php');
 <h4 class="m-t-0 header-title">Between Dates Reports</h4>
                                     <?php
 
-if (isset($_POST['username'])){
-$username=$_POST['username'];}
 									
 if (isset($_POST['fromdate'])){
 $fdate=$_POST['fromdate'];}
 
 if (isset($_POST['todate'])){
-$tdate=$_POST['todate'];}
+$tdate=$_POST['todate'];
+}
 
-$date_diff = abs(strtotime($tdate) -strtotime($fdate));
+$date_diff=abs(strtotime($tdate) -strtotime($fdate));
 $years = floor($date_diff / (365*60*60*24));
 $months = floor(($date_diff - $years * 365*60*60*24) / (30*60*60*24));
 $days = floor(($date_diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-echo $months;
+
 ?>
 <h5 align="center" style="color:blue">Report from <?php echo $fdate?> to <?php echo $tdate?></h5>
 <hr/>
@@ -97,8 +96,9 @@ echo $months;
                   <th>Resident Name</th>
               
               <th>Due</th>
+			  <th>Month</th>
+			  <th>Pay Now</th>
              
-                   <th>Action</th>
                 </tr>
                                         </tr>
                                         </thead>
@@ -106,44 +106,12 @@ echo $months;
 
 
 
-if($months<2){
-	$totaldue=100;
-	$sql="select 100-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-	
-}
-else if($months<3){
-	$totaldue=200;
-$sql="select 200-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}else if($months<4){
-	$totaldue=300;
-$sql="select 300-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-else if($months<5){
-	$totaldue=400;
-$sql="select 400-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-else if($months<6){
-	$totaldue=500;
-$sql="select 500-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-else if($months<7){
-	$totaldue=600;
-$sql="select 600-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-	else if($months<8){
-	$totaldue=700;
-$sql="select 700-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-else if($months<9){
-	$totaldue=800;
-$sql="select 800-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-else{
-	$sql="select 700-SUM(amount) as sum,username from payment where date(payingTime) between '$fdate' AND '$tdate' AND username='$username' ";
-}
-$ret=mysqli_query($con,$sql);
+
+$sql2="select * from dues where due>0";
+$ret=mysqli_query($con,$sql2);
 
 $cnt=1;
+if($ret){
 while ($row=mysqli_fetch_array($ret)) {
 
 ?>
@@ -152,9 +120,9 @@ while ($row=mysqli_fetch_array($ret)) {
                   <td><?php echo $cnt?></td>
 				  
                  <td><?php  echo $row['username'];?></td>
-                  <td><?php  if ( $row['sum']==0){
-				  echo "You have no due for this month."	; }else{ echo $row['sum'];}
-	?></td>
+				 <td><?php  echo $row['due'];?></td>
+				  <td><?php  echo date("F", strtotime('2021-01-04 16:41:51'));?></td>
+                  
           <td><a href="payment.php" title="View Full Details"><i class="fa fa-credit-card"></i></a></td>
 
             
@@ -162,7 +130,7 @@ while ($row=mysqli_fetch_array($ret)) {
                 </tr>
                 <?php 
 $cnt=$cnt+1;
-}?>
+}}?>
                                     </table>
                                 </div>
                             </div>
