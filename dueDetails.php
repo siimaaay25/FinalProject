@@ -107,7 +107,7 @@ $days = floor(($date_diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60
 
 
 
-$sql2="select * from dues where due>0";
+$sql2="select * from dues where isPaid=0 AND date(dueDate) between '$fdate' and '$tdate'";
 $ret=mysqli_query($con,$sql2);
 
 $cnt=1;
@@ -121,11 +121,11 @@ while ($row=mysqli_fetch_array($ret)) {
 				  
                  <td><?php  echo $row['username'];?></td>
 				 <td><?php  echo $row['due'];?></td>
-				  <td><?php  echo date("F", strtotime('2021-01-04 16:41:51'));?></td>
+<td><?php  echo date('M', strtotime($row['dueDate']));?></td>
                   
-          <td><a href="payment.php" title="View Full Details"><i class="fa fa-credit-card"></i></a></td>
+         
 
-            
+          
                  
                 </tr>
                 <?php 
