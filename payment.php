@@ -1,7 +1,8 @@
 <?php
-
-include('dbconnection.php');
 session_start();
+include('protection.php');
+include('dbconnection.php');
+
 
 $msg="";
     if(isset($_POST['submit']))
