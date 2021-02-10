@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include("protection.php");
 include('dbconnection.php');
 	
 
