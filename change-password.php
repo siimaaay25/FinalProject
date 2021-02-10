@@ -3,15 +3,33 @@ session_start();
 
 include('includes/dbconnection.php');
 
+
 if(isset($_POST['submit']))
 {
-$adminid=$_SESSION['avmsaid'];
+$adminusername=$_SESSION['AdminUser'];
 $cpassword=md5($_POST['currentpassword']);
 $newpassword=md5($_POST['newpassword']);
-$query=mysqli_query($con,"select ID from tbladmin where ID='$adminid' and   Password='$cpassword'");
+if($_SESSION['role']=="User"){
+	  $user=$_SESSION['User'];
+	$query=mysqli_query($con,"select UserName from tbladmin where UserName='$user' and   Password='$cpassword'");
+    }
+    else{
+	   $adminusername=$_SESSION['AdminUser'];
+	$query=mysqli_query($con,"select UserName from tbladmin where UserName='$user' and   Password='$cpassword'");
+     }
+
 $row=mysqli_fetch_array($query);
 if($row>0){
-$ret=mysqli_query($con,"update tbladmin set Password='$newpassword' where ID='$adminid'");
+	if($_SESSION['role']=="User"){
+	  $user=$_SESSION['User'];
+	$ret=mysqli_query($con,"update tbladmin set Password='$newpassword' where UserName='$user'");
+
+    }
+    else{
+	   $adminusername=$_SESSION['AdminUser'];
+	   $ret=mysqli_query($con,"update tbladmin set Password='$newpassword' where UserName='$adminusername'");
+     }
+
 $msg= "Your password successully changed"; 
 } else {
 
@@ -19,8 +37,8 @@ $msg="Your current password is wrong";
 }
 
 
-
 }
+
 
   
   ?>
