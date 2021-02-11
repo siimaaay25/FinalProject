@@ -9,8 +9,9 @@ $msg="";
 $dueDetails = $_POST['payment'];
 $query=mysqli_query($con,"update dues set isPaid=1 where dueID='".$_SESSION['dueID']."' and username='".$_SESSION['User']."' ");
 $query2=mysqli_query($con,"insert into payment (username,amount,dueID) VALUES('".$_SESSION['User']."' ,'100','".$_SESSION['dueID']."') ");
+$query3=mysqli_query($con,"update tblvisitor set totalDue=totalDue-100 where username='".$_SESSION['User']."'");
 
-if($query and $query2){
+if($query and $query2 and $query3){
 	 $msg="Thank you! Your payment has been added  ";
 }
 else{
