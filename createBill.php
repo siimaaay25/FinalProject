@@ -10,8 +10,9 @@ $dueDate=$_POST['fromdate'];
 $dueDes=$_POST['usname'];
 
  $query=mysqli_query($con,"INSERT INTO dues (username,due,dueDate,isPaid,dueName) SELECT username,100,'$dueDate',0,'$dueDes' FROM tblvisitor");
+ $query2=mysqli_query($con,"UPDATE tblvisitor set totalDue=totalDue+100 where isActive=1");
 
-    if ($query) {
+    if ($query and $query2) {
     $msg="New Bill is created.";
   }
   else
