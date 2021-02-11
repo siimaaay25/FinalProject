@@ -2,18 +2,33 @@
 
 include ('dbconnection.php'); // Using database connection file here
 
-$id = $_GET['id'];
 
-$qry = mysqli_query($con,"select * from tblvisitor where userID='$id'"); // select query
+include ('dbconnection.php'); // Using database connection file here
 
+$username = $_GET['username'];
+
+$qry = mysqli_query($con,"select * from tblvisitor where username='$username'"); // select query
+
+
+$cnt=1;
+while ($row=mysqli_fetch_array($qry)){
+	$VisitorName=$row['VisitorName'];
+	$MobileNumber=$row['MobileNumber'];
+	$EnterDate=$row['EnterDate'];
+
+}
 $data = mysqli_fetch_array($qry); // fetch data
 
 if(isset($_POST['update'])) // when click on Update button
 {
     $isActive = $_POST['isActive'];
-    
+    $sql=mysqli_query($con,"INSERT INTO wholeft (username, VisitorName, MobileNumber, EnterDate) VALUES('$username','$VisitorName','$MobileNumber','$EnterDate')");
 
-    $edit = mysqli_query($con,"update tblvisitor set isActive='0' where userID='$id'");
+    $edit = mysqli_query($con,"update tblvisitor set isActive=0 where username='$username'");
+	
+	
+	$sql2="UPDATE flat SET isFull=0 where username='$username'";
+
 	
     if($edit)
     {
