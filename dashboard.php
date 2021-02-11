@@ -1,8 +1,10 @@
 <?php
-
+session_start();
 include('dbconnection.php');
 
-session_start();
+if(empty($_SESSION['AdminUser']))
+{ header("Location:login.php");}
+else{
 
   ?>
  
@@ -145,4 +147,4 @@ session_start();
 
 </html>
 <!-- end document-->
-  <?php  ?>
+  <?php  }?>
