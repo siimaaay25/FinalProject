@@ -31,11 +31,11 @@ header("location:http://cse.akdeniz.edu.tr/");
 exit;
 }
 if (strstr($gelenpostlar,'tblvisitor')) {
-header("location:http://www.beybut.com/hackerbey.jpg");
+header("location:http:http://cse.akdeniz.edu.tr/"");
 exit;
 }
 if (strstr($gelenpostlar,'flat')) {
-header("location:http://www.beybut.com/hackerbey.jpg");
+header("location:http://cse.akdeniz.edu.tr/"");
 exit;
 }
 
